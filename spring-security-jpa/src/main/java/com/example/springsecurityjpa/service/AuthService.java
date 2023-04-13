@@ -3,6 +3,7 @@ package com.example.springsecurityjpa.service;
 import com.example.springsecurityjpa.entity.Role;
 import com.example.springsecurityjpa.entity.TokenConfirm;
 import com.example.springsecurityjpa.entity.User;
+import com.example.springsecurityjpa.exception.NotFoundException;
 import com.example.springsecurityjpa.repository.RoleRepository;
 import com.example.springsecurityjpa.repository.TokenConfirmRepository;
 import com.example.springsecurityjpa.repository.UserRepository;
@@ -101,7 +102,7 @@ public class AuthService {
 
     public String confirm(String token) {
         TokenConfirm tokenConfirm = tokenConfirmRepository.findByToken(token).orElseThrow(() -> {
-            throw new UsernameNotFoundException("Token không hợp lệ");
+            throw new NotFoundException("Token không hợp lệ");
         });
 
 
