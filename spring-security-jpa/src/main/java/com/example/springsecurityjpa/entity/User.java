@@ -31,9 +31,16 @@ public class User implements UserDetails {
     private String email;
     @Column(name = "password")
     private String password;
-    @Type(JsonType.class)
-    @Column(name = "roles", columnDefinition = "json")
-    private List<String> roles;
+    @Column(name = "enable")
+    private boolean enable = false;
+
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "roles_id"))
+    private List<Role> roles = new ArrayList<>();
+
 
 
     @Override
@@ -73,7 +80,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.enable;
     }
 
 }

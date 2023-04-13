@@ -67,7 +67,9 @@ public class SecurityConfig {
         String [] PUBLIC = {
                 "/",
                 "/css/**",
-                "/login-handle"
+                "/login-handle",
+                "/api/auth/register",
+                "/api/auth/confirm"
         };
 
         http
