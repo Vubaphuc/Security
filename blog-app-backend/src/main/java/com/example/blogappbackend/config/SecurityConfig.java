@@ -55,7 +55,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain (HttpSecurity http) throws Exception {
         String [] PUBLIC = {
-                "/api/v1/public/**"
+                "/api/v1/public/**",
+                "/"
         };
         http
                 .csrf().disable()
