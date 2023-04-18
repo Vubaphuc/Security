@@ -1,8 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import {
+  useGetAllBlogPublicPageQuery,
+  useGetAllCategoryQuery,
+} from "../../app/service/blogService";
 
 function HomePage() {
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+
+  const {
+    data: categoryData,
+    isLoading: categoryLoading,
+    isError: categoryIsError,
+    error: categoryError,
+  } = useGetAllCategoryQuery();
+
+  const {
+    data: blogData,
+    isLoading: blogIsLoading,
+    isError: blogIsError,
+    error: blogError,
+  } = useGetAllBlogPublicPageQuery({page,pageSize});
+
+  if (categoryLoading || blogIsLoading) {
+    return <h2>Loading....</h2>;
+  }
+
+  if (categoryIsError) {
+    return <h2>Error : {categoryError}</h2>;
+  }
+
+  if (blogIsError) {
+    return <h2>Error : {blogError}</h2>;
+  }
+
+  console.log(blogData);
+
+  const totalPages = Math.ceil(blogData.totalItems / pageSize);
+  console.log(totalPages)
+
+  const goToPreviousPage = () => {
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  };
+
+  const goToNextPage = () => {
+    if (page < totalPages) {
+      setPage(page + 1);
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -23,44 +73,53 @@ function HomePage() {
           </h1>
         </header>
         <ul className="terms-tags top-tags">
-          <li>
-            <Link to={"/categories/java"}>
-              Java
-              <sup>
-                <strong>
-                  <sup>9</sup>
-                </strong>
-              </sup>
-            </Link>
-          </li>
+          {categoryData.map((category) => (
+            <li key={category.id}>
+              <Link to={`categories/${category.name}`}>
+                {category.name}
+                <sup>
+                  <strong>
+                    <sup>{category.used}</sup>
+                  </strong>
+                </sup>
+              </Link>
+            </li>
+          ))}
         </ul>
-        <article className="post-entry">
-          <header className="entry-header">
-            <h2>
-              Hướng dẫn tạo tài khoản và sử dụng Chat GPT chỉ với 1 cốc trà đá
-            </h2>
-          </header>
-          <div className="entry-content">
-            <p>
-              Dạo này Chat GPT đang rất hot, được thần thành hóa lên quá khiến
-              nhiều người lo sợ nó sẽ “cướp” mất công việc của mình. Vậy Chat
-              GPT cụ thể là gì, dùng như nào? Bài viết này mình sẽ hướng dẫn các
-              bạn tự tạo tài khoản cho riêng mình và trải nghiệm thử Chat GPT,
-              một công cụ khá hữu ích nếu bạn sử dụng đúng cách. Còn nếu muốn
-              trải nghiệm nhanh thì các bạn có thể kéo xuống cuối bài viết để
-              lấy một số tài khoản free được chia sẻ trên mạng (dùng chung cho
-              nhiều người)....
-            </p>
-          </div>
-          <footer className="entry-footer">
-            <span>01/02/2023</span>
-          </footer>
-          <Link
-            className="entry-link"
-            aria-label="post link to Hướng dẫn tạo tài khoản và sử dụng ChatGPT chỉ với 1 cốc trà đá"
-            to={"/blogs/1/abc"}
-          ></Link>
-        </article>
+        {blogData.data.map((blog) => (
+          <article className="post-entry" key={blog.id}>
+            <header className="entry-header">
+              <h2>{blog.title}</h2>
+            </header>
+            <div className="entry-content">
+              <p>{blog.content}</p>
+            </div>
+            <footer className="entry-footer">
+              <span>{new Date(blog.createdAt).toLocaleDateString()}</span>
+            </footer>
+            <Link
+              className="entry-link"
+              aria-label="post link to Hướng dẫn tạo tài khoản và sử dụng ChatGPT chỉ với 1 cốc trà đá"
+              to={`/blog/${blog.id}/${blog.slug}`}
+            ></Link>
+          </article>
+        ))}
+        <div className="pagination">
+          <button
+            className="btn btn-left"
+            onClick={goToPreviousPage}
+            style={{ display: page === 1 ? "none" : "block" }}
+          >
+            Trang trước
+          </button>
+          <button
+            className="btn btn-right"
+            onClick={goToNextPage}
+            style={{ display: page === totalPages ? "none" : "block" }}
+          >
+            Trang tiếp theo
+          </button>
+        </div>
       </main>
     </>
   );

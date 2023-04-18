@@ -1,21 +1,40 @@
-import React from 'react'
+import React from "react";
+import { useGetBlogByIdAndBySlugQuery } from "../../app/service/blogService";
+import { useParams } from "react-router-dom";
 
 function BlogDetail() {
+  const { blogId } = useParams();
+  const { blogSlug } = useParams();
+
+  console.log(blogId)
+  console.log(blogSlug)
+
+  const { data: blogData, isLoading: blogLoading } = useGetBlogByIdAndBySlugQuery({blogId,blogSlug});
+  console.log(blogData)
+  console.log(blogId)
+  console.log(blogSlug)
+
+  if (blogLoading) {
+    return <h2>Loading....</h2>;
+  }
+
+  console.log(blogData)
+
   return (
-    <main class="main">
-    <article class="post-single">
-        <header class="post-header">
-            <h1 class="post-title">Hướng dẫn tạo tài khoản và sử dụng Chat GPT chỉ với 1 cốc trà đá</h1>
-            <div class="post-meta"><span>01/02/2023</span>
+    <main className="main">
+        <article className="post-single">
+          <header className="post-header">
+            <h1 className="post-title">{blogData?.title}</h1>
+            <div className="post-meta">
+              <span>{new Date(blogData?.createdAt).toLocaleDateString()}</span>
             </div>
-        </header>
-        <div class="post-content">
-            <p>Dạo này Chat GPT đang rất hot, được thần thành hóa lên quá khiến nhiều người 
-                lo sợ nó sẽ mất công việc của mình. Vậy Chat GPT cụ thể là gì, dùng như nào?</p>
-        </div>
-    </article>
-</main>
-  )
+          </header>
+          <div className="post-content">
+          <p>{blogData?.content}</p>
+          </div>
+        </article>
+    </main>
+  );
 }
 
-export default BlogDetail
+export default BlogDetail;

@@ -11,6 +11,7 @@ import com.example.blogappbackend.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,7 +30,9 @@ public class BlogService {
 
 
     public PageBlog findAllBlogPage(int page, int pageSize) {
-        Page<Blog> blogPage = blogRepository.findAll(PageRequest.of(page - 1, pageSize));
+        Page<Blog> blogPage = blogRepository.findAllByStatusTrue(PageRequest.of(page - 1, pageSize));
+
+
         return new PageBlog(
                 blogPage.getNumber() + 1,
                 blogPage.getSize(),
@@ -40,7 +43,10 @@ public class BlogService {
     }
 
     public List<Blog> searchBlogByTerm(String term) {
-        return blogRepository.findByTitleContainingIgnoreCase(term);
+        if (term == null || term.trim().isEmpty()) {
+            return Collections.emptyList();
+        }
+        return blogRepository.findByTitleContainingIgnoreCaseAndStatusTrue(term);
     }
 
 
@@ -50,8 +56,8 @@ public class BlogService {
     }
 
     // 4. lấy Top danh sách Category nhiều nhất
-    public List<CategoryDto> findTopCategories(int limit) {
-       return topCategory(listCategories(),limit);
+    public List<CategoryDto> findTopCategories() {
+       return topCategory(listCategories());
     }
 
     // lấy list categry
@@ -67,14 +73,14 @@ public class BlogService {
 
 
     // lấy top category dùng nhiều nhất
-    private List<CategoryDto> topCategory (List<CategoryDto> categoryDtos, int limit) {
+    private List<CategoryDto> topCategory (List<CategoryDto> categoryDtos) {
         Collections.sort(categoryDtos, new Comparator<CategoryDto>() {
             @Override
             public int compare(CategoryDto o1, CategoryDto o2) {
                 return o2.getUsed().compareTo(o1.getUsed());
             }
         });
-        return categoryDtos.subList(0,Math.min(categoryDtos.size(),limit));
+        return categoryDtos.subList(0,Math.min(categoryDtos.size(),5));
     }
 
     // 5.

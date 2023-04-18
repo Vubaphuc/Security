@@ -1,7 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from "react-router-dom"
+import { useSearchAllBlogPublicByTermQuery } from '../../app/service/blogService'
 
 function SearchPage() {
+
+
+    const [terms, setTerm] = useState("");
+
+
+    const { data: blogData, isLoading: blogLoading } = useSearchAllBlogPublicByTermQuery(terms);
+
+    if (blogLoading) {
+        return <h2>Loading....</h2>;
+      }
+
+    const handleSearchTermChange = (event) => {
+        setTerm(event.target.value);
+    };
+
   return (
     <main className="main">
     <header className="page-header">
@@ -32,18 +48,21 @@ function SearchPage() {
             placeholder="Tìm kiếm bài viết"
             type="search"
             autoComplete="off"
+            onChange={handleSearchTermChange}
         />
-        <ul id="searchResults">
+        {blogData.map((blog) => (
+        <ul id="searchResults" key={blog.id}>
             <li className="post-entry">
                 <header className="entry-header">
-                    Truyền dữ liệu giữa React Components&nbsp;»
+                    {blog.title}&nbsp;»
                 </header>
                 <Link
-                    to={"/blogs/1/abc"}
-                    aria-label="Truyền dữ liệu giữa React Components"
+                    to={`/blog/${blog.id}/${blog.slug}`}
+                    aria-label={blog.title}
                 ></Link>
             </li>
         </ul>
+        ))}
     </div>
 </main>
   )

@@ -23,7 +23,7 @@ function App() {
             <Route index element={<CategoryList />}/>
             <Route path=':categoryName' element={<CategoryDetail />}/>
           </Route>
-          <Route path="blogs/:blogId/:blogSlug" element={<BlogDetail />}/>
+          <Route path="blog/:blogId/:blogSlug" element={<BlogDetail />}/>
           <Route path="*" element={<NotFound />}/>
         </Route>
       </Routes>

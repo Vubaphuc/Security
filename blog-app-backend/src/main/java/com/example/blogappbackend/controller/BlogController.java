@@ -23,7 +23,7 @@ public class BlogController {
 
     // 2. Tìm kiếm blog
     @GetMapping("search")
-    public ResponseEntity<?> searchBlogByTerm (@RequestParam String term) {
+    public ResponseEntity<?> searchBlogByTerm (@RequestParam(defaultValue = "") String term) {
         return ResponseEntity.ok(blogService.searchBlogByTerm(term));
     }
 
@@ -34,19 +34,19 @@ public class BlogController {
     }
 
     // 4. lấy Top danh sách Category nhiều nhất
-    @GetMapping("category/{limit}")
-    public ResponseEntity<?> findTopCategories (@PathVariable int limit) {
-        return ResponseEntity.ok(blogService.findTopCategories(limit));
+    @GetMapping("category/top5")
+    public ResponseEntity<?> findTopCategories () {
+        return ResponseEntity.ok(blogService.findTopCategories());
     }
 
     // 5. Lấy danh sách các bài viết đã public áp dụng category này
-    @GetMapping("/{categoryName}")
+    @GetMapping("categories/{categoryName}")
     public ResponseEntity<?> findBlogsByCategoryName (@PathVariable String categoryName) {
         return ResponseEntity.ok(blogService.findBlogsByCategoryName(categoryName));
     }
 
     // 6.
-    @GetMapping("/{blogId}/{blogSlug}")
+    @GetMapping("blog/{blogId}/{blogSlug}")
     public ResponseEntity<?> findBlogByIdAndBySlug (@PathVariable Integer blogId, @PathVariable String blogSlug) {
         return ResponseEntity.ok(blogService.findBlogByIdAndBySlug(blogId, blogSlug));
     }
