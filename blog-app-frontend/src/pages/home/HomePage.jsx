@@ -110,14 +110,14 @@ function HomePage() {
             onClick={goToPreviousPage}
             style={{ display: page === 1 ? "none" : "block" }}
           >
-            Trang trước
+            « Trang trước
           </button>
           <button
             className="btn btn-right"
             onClick={goToNextPage}
             style={{ display: page === totalPages ? "none" : "block" }}
           >
-            Trang tiếp theo
+            Trang tiếp theo »
           </button>
         </div>
       </main>
