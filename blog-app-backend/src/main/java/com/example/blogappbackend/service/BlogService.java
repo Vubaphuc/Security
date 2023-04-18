@@ -4,10 +4,12 @@ import com.example.blogappbackend.dto.CategoryDto;
 import com.example.blogappbackend.dto.PageBlog;
 import com.example.blogappbackend.entity.Blog;
 import com.example.blogappbackend.entity.Category;
+import com.example.blogappbackend.entity.Comment;
 import com.example.blogappbackend.exception.NotFoundException;
 import com.example.blogappbackend.mapper.CategoryMapper;
 import com.example.blogappbackend.repository.BlogRepository;
 import com.example.blogappbackend.repository.CategoryRepository;
+import com.example.blogappbackend.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,9 +26,11 @@ import java.util.stream.Collectors;
 public class BlogService {
 
     @Autowired
-    BlogRepository blogRepository;
+    private BlogRepository blogRepository;
     @Autowired
-    CategoryRepository categoryRepository;
+     private CategoryRepository categoryRepository;
+    @Autowired
+    private CommentRepository commentRepository;
 
 
     public PageBlog findAllBlogPage(int page, int pageSize) {
@@ -93,5 +97,9 @@ public class BlogService {
         return blogRepository.findByIdAndSlugContainsIgnoreCaseAndStatusTrue(blogId,blogSlug).orElseThrow(() -> {
             throw new NotFoundException("Not Found Blog Or Blog Not Public");
         });
+    }
+
+    public List<Comment> findAllCommentByBlogId(Integer blogId) {
+        return commentRepository.findCommentByBlog_IdAndBlog_StatusTrue(blogId);
     }
 }

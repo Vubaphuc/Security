@@ -1,9 +1,6 @@
 package com.example.blogappbackend;
 
-import com.example.blogappbackend.entity.Blog;
-import com.example.blogappbackend.entity.Category;
-import com.example.blogappbackend.entity.Role;
-import com.example.blogappbackend.entity.User;
+import com.example.blogappbackend.entity.*;
 import com.example.blogappbackend.repository.*;
 import com.github.slugify.Slugify;
 import org.junit.jupiter.api.Test;
@@ -104,6 +101,30 @@ class BlogAppBackendApplicationTests {
                     .build();
 
             blogRepository.save(blog);
+        }
+    }
+
+    @Test
+    void save_comments() {
+        Random rd = new Random();
+        List<User> userList = userRepository.findAll();
+        List<Blog> blogList = blogRepository.findAll();
+
+        for (int i = 0; i < 100; i++) {
+            // Random 1 user
+            User rdUser = userList.get(rd.nextInt(userList.size()));
+
+            // Random 1 blog
+            Blog rdBlog = blogList.get(rd.nextInt(blogList.size()));
+
+            // Tao comment
+            Comment comment = Comment.builder()
+                    .content("comment " + (i + 1))
+                    .user(rdUser)
+                    .blog(rdBlog)
+                    .build();
+
+            commentRepository.save(comment);
         }
     }
 

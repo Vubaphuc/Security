@@ -51,4 +51,10 @@ public class BlogController {
         return ResponseEntity.ok(blogService.findBlogByIdAndBySlug(blogId, blogSlug));
     }
 
+    // 7. comment
+    @GetMapping("comment/{blogId}")
+    public ResponseEntity<?> findAllCommentByBlogId(@PathVariable Integer blogId) {
+        return ResponseEntity.ok(blogService.findAllCommentByBlogId(blogId));
+    }
+
 }

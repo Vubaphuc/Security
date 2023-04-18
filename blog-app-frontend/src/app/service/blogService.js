@@ -22,6 +22,9 @@ export const blogApi = createApi({
         getCategoryByName: builder.query({
             query: (categoryName) => `categories/${categoryName}`
         }),
+        getAllCommentByBlogId: builder.query({
+            query: (blogId) => `comment/${blogId}`
+        }),
     })
 })
 
@@ -31,5 +34,6 @@ export const {
     useSearchAllBlogPublicByTermQuery,
     useGetAllCategoryQuery,
     useGetTopCategoryQuery,
-    useGetCategoryByNameQuery
+    useGetCategoryByNameQuery,
+    useGetAllCommentByBlogIdQuery
 } = blogApi
