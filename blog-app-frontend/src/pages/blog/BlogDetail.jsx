@@ -34,29 +34,38 @@ function BlogDetail() {
     return <h2>Error: {commentError}</h2>;
   }
 
-  const getTimeAgoString= (createdAt) => {
-
+  const getTimeAgoString = (createdAt) => {
     // tính time từ hiện tại đến thời điểm bình luận
     const timeAgoInMs = new Date().getTime() - new Date(createdAt).getTime();
 
-    // tính số giờ 
+    // tính số giờ
     const hoursAgo = Math.floor(timeAgoInMs / 3600000);
 
-    // 
-    if (hoursAgo < 24) {
+    //
+    if (hoursAgo < 1) {
+      // tính số phút
+      const minutesAgo = Math.floor(timeAgoInMs / 60000);
+
+      return `${minutesAgo} phút trước`;
+
+    } else if (hoursAgo < 24) {
+
       return `${hoursAgo} giờ trước`;
+
     } else {
       // tính số ngày
       const daysAgo = Math.floor(hoursAgo / 24);
-      
+
       if (daysAgo === 1) {
+
         return `1 ngày trước`;
+
       } else {
+        
         return `${daysAgo} ngày trước`;
       }
     }
-  }
-
+  };
 
   return (
     <>
