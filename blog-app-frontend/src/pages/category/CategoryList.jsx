@@ -4,10 +4,13 @@ import { useGetAllCategoryQuery } from "../../app/service/blogService";
 
 function CategoryList() {
 
-  const { data: categoryData, isLoading: categoryIsLoading} = useGetAllCategoryQuery();
+  const { data: categoryData, isLoading: categoryIsLoading, isError: categoryIsError, error:categoryError} = useGetAllCategoryQuery();
 
   if (categoryIsLoading) {
     return <h2>Loading....</h2>;
+  }
+  if (categoryIsError) {
+    return <h2>Error: {categoryError}</h2>;
   }
 
   return (

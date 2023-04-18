@@ -8,11 +8,14 @@ function SearchPage() {
     const [terms, setTerm] = useState("");
 
 
-    const { data: blogData, isLoading: blogLoading } = useSearchAllBlogPublicByTermQuery(terms);
+    const { data: blogData, isLoading: blogLoading, isError: blogIsError, error: blogError } = useSearchAllBlogPublicByTermQuery(terms);
 
     if (blogLoading) {
         return <h2>Loading....</h2>;
       }
+    if (blogIsError) {
+        return <h2>Error: {blogError}</h2>;
+    }
 
     const handleSearchTermChange = (event) => {
         setTerm(event.target.value);

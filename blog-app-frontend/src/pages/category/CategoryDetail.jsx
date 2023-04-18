@@ -7,11 +7,14 @@ function CategoryDetail() {
 
   console.log(categoryName);
 
-  const { data: blogData, isLoading: blogLoading } = useGetCategoryByNameQuery(categoryName);
+  const { data: blogData, isLoading: blogLoading, isError: blogIsError, error: blogError } = useGetCategoryByNameQuery(categoryName);
   console.log(blogData);
 
   if (blogLoading) {
     return <h2>Loading....</h2>;
+  }
+  if (blogIsError) {
+    return <h2>Error: {blogError}</h2>;
   }
 
   return (
