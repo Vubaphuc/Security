@@ -13,26 +13,27 @@ public class CategoryController {
     private CategoryService categoryService;
 
 //    Lấy ds category (có phân trang, mặc định là pageSize = 10)
-//    GET : api/v1/admin/categories?page={page}&pageSize={pageSize}
     @GetMapping("categories")
     public ResponseEntity<?> findListCategoryPage(@RequestParam Integer page, @RequestParam(defaultValue = "10") Integer pageSize) {
         return ResponseEntity.ok(categoryService.findListCategoryPage(page,pageSize));
     }
+
+
 //    Thêm category (Lưu ý tên category không được trùng nhau)
-//    POST : api/v1/admin/categories
     @PostMapping("categories")
     public ResponseEntity<?> createNewCategory (@RequestBody UpsertCategoryRequest request) {
         return ResponseEntity.ok(categoryService.createNewCategory(request));
     }
+
+
 //    Cập nhật category (Lưu ý tên category không được trùng nhau)
-//    PUT : api/v1/admin/categories/{id}
     @PutMapping("categories/{id}")
     public ResponseEntity<?> updateCategoryById(@RequestBody UpsertCategoryRequest request, @PathVariable Integer id) {
         return ResponseEntity.ok(categoryService.updateCategoryById(request, id));
     }
 
+
 //    Xóa category (xóa blog áp dụng category trong bảng trung gian, không xóa blog trong bảng blog)
-//    DELETE : api/v1/admin/categories/{id}
     @DeleteMapping("categories/{id}")
     public ResponseEntity<?> deleteCategoryById(@PathVariable Integer id) {
         return ResponseEntity.ok(categoryService.deleteCategoryById(id));

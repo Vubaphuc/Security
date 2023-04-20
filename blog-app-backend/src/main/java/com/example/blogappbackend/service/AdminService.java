@@ -44,6 +44,7 @@ public class AdminService {
     }
 
     public PageBlog findListBlogPageByUserLogin(Integer page, Integer pageSize) {
+
         User user = iCurrentUser.getUser();
 
         log.info("iCurrent User : {}", user);
@@ -66,6 +67,7 @@ public class AdminService {
     }
 
     public Blog createNewBlog(UpsertBlogRequest request) {
+
         Blog blog = Blog.builder()
                 .title(request.getTitle())
                 .description(request.getDescription())

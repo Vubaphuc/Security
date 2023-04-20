@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1/admin")
 @Slf4j
 public class AdminController {
-    @Autowired
-    private BlogRepository blogRepository;
 
     @Autowired
     private AdminService adminService;
@@ -29,8 +27,7 @@ public class AdminController {
     @Autowired
     private UserRepository userRepository;
 
-    //    Lấy danh sách blog (có phân trang, mặc định là pageSize = 10)
-//    GET : api/v1/admin/blogs?page={page}&pageSize={pageSize}
+    // 1. Lấy danh sách blog (có phân trang, mặc định là pageSize = 10)
     @GetMapping("blogs")
     public ResponseEntity<?> findListBlogPage(@RequestParam Integer page, @RequestParam(defaultValue = "10") Integer pageSize) {
         return ResponseEntity.ok(adminService.findListBlogPage(page,pageSize));
@@ -38,7 +35,6 @@ public class AdminController {
 
 
     //    Lấy danh sách blog của user đang login (có phân trang, mặc định là pageSize = 10)
-//    GET : api/v1/admin/blogs/own-blogs?page={page}&pageSize={pageSize}
     @GetMapping("blogs/own-blogs")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_AUTHOR')")
     public ResponseEntity<?> findListBlogPageByUserLogin(
@@ -50,31 +46,30 @@ public class AdminController {
 
 
 //    Lấy chi tiết blog theo id
-//    GET : api/v1/admin/blogs/{id}
     @GetMapping("blogs/{id}")
     public ResponseEntity<?> findBlogById(@PathVariable Integer id) {
         return ResponseEntity.ok(adminService.findBlogById(id));
     }
+
 //    Thêm blog mới
-//    POST : api/v1/admin/blogs
     @PostMapping("blogs")
     public ResponseEntity<?> createNewBlog (@RequestBody UpsertBlogRequest request) {
         return ResponseEntity.ok(adminService.createNewBlog(request));
     }
+
 //    Cập nhật blog
-//    PUT : api/v1/admin/blogs/{id}
     @PutMapping("blogs/{id}")
     public ResponseEntity<?> updateBlogById(@RequestBody UpsertBlogRequest request, @PathVariable Integer id) {
         return ResponseEntity.ok(adminService.updateBlogById(request, id));
     }
+
 //    Xóa blog (xóa blog xóa luôn comment liên quan đến blog)
-//    DELETE : api/v1/admin/blogs/{id}
     @DeleteMapping("blogs/{id}")
     public ResponseEntity<?> deleteBlogById(@PathVariable Integer id) {
         return ResponseEntity.ok("Đã Xóa " + adminService.deleteBlogById(id));
     }
+
 //    Tìm kiếm bài viết (chỉ cần bài viết chứa keyword là được)
-//    GET : api/v1/admin/blogs/search?keyword={keyword}&page={page}&pageSize={pageSize}
     @GetMapping("search")
     public ResponseEntity<?> searchBlogByKeyword (@RequestParam String keyword,
                                                   @RequestParam Integer page,

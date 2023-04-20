@@ -64,13 +64,21 @@ public class SecurityConfig {
                 "/api/v1/login-handle"
         };
         String [] ADMIN = {
-                "/**"
+                "/api/v1/admin/**"
+        };
+        String [] AUTHOR = {
+                "/api/v1/admin/**"
+        };
+        String [] USER = {
+                "/api/v1/admin/**"
         };
         http
                 .csrf().disable()
                 .authorizeHttpRequests()
                     .requestMatchers(PUBLIC).permitAll()
-                .requestMatchers(ADMIN).hasRole("ADMIN")
+                    .requestMatchers(USER).hasAnyRole("USER", "ADMIN")
+                    .requestMatchers(ADMIN).hasRole("ADMIN")
+                    .requestMatchers(AUTHOR).hasAuthority("ROLE_AUTHOR")
                     .anyRequest().authenticated()
                 .and()
                     .sessionManagement()

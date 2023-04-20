@@ -46,7 +46,6 @@ public class AuthController {
 
     @PostMapping("login-handle")
     public ResponseEntity<?> login(@RequestBody LoginRequest request, HttpSession session) {
-        // tạo đối tượng xác thực
         // Tạo đối tượng xác thực
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
                 request.getEmail(),
