@@ -1,5 +1,6 @@
 package com.example.blogappbackend.exception;
 
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,3 +31,4 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         response.getWriter().write(messageJSON);
     }
 }
+

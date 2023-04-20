@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -33,6 +34,9 @@ public class SecurityConfig {
 
     @Autowired
     private CustomAccessDeniedHandler customAccessDeniedHandler;
+
+
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -56,13 +60,17 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain (HttpSecurity http) throws Exception {
         String [] PUBLIC = {
                 "/api/v1/public/**",
-                "/"
+                "/",
+                "/api/v1/login-handle"
+        };
+        String [] ADMIN = {
+                "/**"
         };
         http
                 .csrf().disable()
                 .authorizeHttpRequests()
                     .requestMatchers(PUBLIC).permitAll()
-                    .requestMatchers("/user").hasAnyRole("USER", "ADMIN")
+                .requestMatchers(ADMIN).hasRole("ADMIN")
                     .anyRequest().authenticated()
                 .and()
                     .sessionManagement()
@@ -77,4 +85,6 @@ public class SecurityConfig {
 
         return http.build();
     }
+
+
 }

@@ -22,7 +22,7 @@ public class JwtUtils {
     private long jwtExpiration;
 
     //  Tạo token từ thông tin của user
-    private String generateToken (UserDetails userDetails) {
+    public String generateToken (UserDetails userDetails) {
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("authorities", userDetails.getAuthorities());
         return Jwts.builder()

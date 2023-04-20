@@ -9,12 +9,17 @@ import CategoryList from './pages/category/CategoryList'
 import CategoryDetail from './pages/category/CategoryDetail'
 import BlogDetail from './pages/blog/BlogDetail'
 import NotFound from './pages/not-found/NotFound'
+import Login from './pages/login/LoginPage'
 
 function App() {
   
 
   return (
     <>
+    <Routes>
+
+    </Routes>
+
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
@@ -24,6 +29,7 @@ function App() {
             <Route path=':categoryName' element={<CategoryDetail />}/>
           </Route>
           <Route path="blog/:blogId/:blogSlug" element={<BlogDetail />}/>
+          <Route path="login" element={<Login />}/>
           <Route path="*" element={<NotFound />}/>
         </Route>
       </Routes>
