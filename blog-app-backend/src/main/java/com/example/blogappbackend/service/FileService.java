@@ -7,6 +7,7 @@ import com.example.blogappbackend.exception.NotFoundException;
 import com.example.blogappbackend.repository.ImageRepository;
 import com.example.blogappbackend.response.FileResponse;
 import com.example.blogappbackend.security.ICurrentUserImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Service
+@Slf4j
 public class FileService {
     @Autowired
     private ImageRepository imageRepository;
@@ -29,7 +31,9 @@ public class FileService {
         Image image = Image.builder()
                 .type(file.getContentType())
                 .data(file.getBytes())
+                .user(user)
                 .build();
+
         imageRepository.save(image);
 
         FileResponse fileResponse = new FileResponse("http://localhost:8080/api/v1/admin/files/" +  image.getId());
@@ -85,7 +89,9 @@ public class FileService {
 
     public List<Image> findListImageByUserLogin(Integer id) {
 
-        if (!iCurrentUser.getUser().equals(id)) {
+        log.info("iCurrentUser.getUser() : {} ", iCurrentUser.getUser());
+
+        if (!iCurrentUser.getUser().getId().equals(id)) {
             throw new BadRequestException("User Id = " + id + " không phải là user đang login");
         }
 
@@ -97,9 +103,14 @@ public class FileService {
             throw new NotFoundException("Not Found Image with id = " + id);
         });
 
-        if (!image.getUser().getId().equals(iCurrentUser.getUser().getId())) {
+        log.info("image : {} ", image.getId());
+
+        log.info("iCurrentUser.getUser().getId() : {} ", iCurrentUser.getUser().getId());
+
+        if (!image.getUser().equals(iCurrentUser.getUser())) {
             throw new BadRequestException("Image không phải của user login");
         }
+
 
         imageRepository.deleteById(image.getId());
 

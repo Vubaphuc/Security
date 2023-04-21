@@ -3,6 +3,7 @@ package com.example.blogappbackend.controller;
 import com.example.blogappbackend.request.UpdateCommentRequest;
 import com.example.blogappbackend.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +31,7 @@ public class CommentController {
 
     //    Xóa comment
     @DeleteMapping("comments/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<?> deleteCommentById(@PathVariable Integer id) {
         return ResponseEntity.ok(commentService.deleteCommentById(id));
     }

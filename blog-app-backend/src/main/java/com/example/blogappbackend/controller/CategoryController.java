@@ -3,6 +3,7 @@ package com.example.blogappbackend.controller;
 import com.example.blogappbackend.request.UpsertCategoryRequest;
 import com.example.blogappbackend.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,7 @@ public class CategoryController {
 
 //    Thêm category (Lưu ý tên category không được trùng nhau)
     @PostMapping("categories")
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> createNewCategory (@RequestBody UpsertCategoryRequest request) {
         return ResponseEntity.ok(categoryService.createNewCategory(request));
     }
@@ -35,6 +37,7 @@ public class CategoryController {
 
 //    Xóa category (xóa blog áp dụng category trong bảng trung gian, không xóa blog trong bảng blog)
     @DeleteMapping("categories/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<?> deleteCategoryById(@PathVariable Integer id) {
         return ResponseEntity.ok(categoryService.deleteCategoryById(id));
     }

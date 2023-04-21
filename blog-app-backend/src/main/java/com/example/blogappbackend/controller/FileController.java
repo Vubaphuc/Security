@@ -4,6 +4,7 @@ import com.example.blogappbackend.entity.Image;
 import com.example.blogappbackend.response.FileResponse;
 import com.example.blogappbackend.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ public class FileController {
 
 //    Upload image theo user (người thực hiện upload chính là user đang login)
     @PostMapping("files")
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?>  uploadImageByUser(@ModelAttribute("file")MultipartFile file) {
         FileResponse fileResponse = fileService.uploadFile(file);
         return ResponseEntity.ok(fileResponse);
@@ -43,6 +45,7 @@ public class FileController {
 
 //    DELETE : api/v1/files/{id}
     @DeleteMapping("files/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<?> deleteImageByUserLogin(@PathVariable Integer id) {
         Image image = fileService.deleteImageByUserLogin(id);
 

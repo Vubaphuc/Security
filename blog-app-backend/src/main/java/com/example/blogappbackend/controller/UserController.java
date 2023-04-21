@@ -3,6 +3,7 @@ package com.example.blogappbackend.controller;
 import com.example.blogappbackend.request.UpsertUserRequest;
 import com.example.blogappbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,7 @@ public class UserController {
 
 //    Tạo user mới
     @PostMapping("users")
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> createNewUser (@RequestBody UpsertUserRequest request) {
         return ResponseEntity.ok(userService.createNewUser(request));
     }

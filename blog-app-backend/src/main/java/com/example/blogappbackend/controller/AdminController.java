@@ -9,6 +9,7 @@ import com.example.blogappbackend.service.AdminService;
 import com.example.blogappbackend.service.CustomUserDetailsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -53,6 +54,7 @@ public class AdminController {
 
 //    Thêm blog mới
     @PostMapping("blogs")
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> createNewBlog (@RequestBody UpsertBlogRequest request) {
         return ResponseEntity.ok(adminService.createNewBlog(request));
     }
@@ -65,6 +67,7 @@ public class AdminController {
 
 //    Xóa blog (xóa blog xóa luôn comment liên quan đến blog)
     @DeleteMapping("blogs/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<?> deleteBlogById(@PathVariable Integer id) {
         return ResponseEntity.ok("Đã Xóa " + adminService.deleteBlogById(id));
     }
