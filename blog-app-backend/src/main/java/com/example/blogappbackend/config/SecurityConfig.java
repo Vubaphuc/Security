@@ -58,26 +58,32 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain (HttpSecurity http) throws Exception {
+
         String [] PUBLIC = {
                 "/api/v1/public/**",
                 "/",
-                "/api/v1/login-handle",
+                "/api/v1/login-handle"
+        };
+
+        String [] ADMIN = {
+                "/api/v1/admin/**",
                 "/api/v1/**"
         };
-        String [] ADMIN = {
-                "/api/v1/admin/**"
-        };
+
         String [] AUTHOR = {
                 "/api/v1/admin/**"
         };
+
         String [] USER = {
                 "/api/v1/admin/**"
         };
+
+
         http
                 .csrf().disable()
                 .authorizeHttpRequests()
                     .requestMatchers(PUBLIC).permitAll()
-                    .requestMatchers(USER).hasAnyRole("USER", "ADMIN")
+                    .requestMatchers(USER).hasRole("USER")
                     .requestMatchers(ADMIN).hasRole("ADMIN")
                     .requestMatchers(AUTHOR).hasAuthority("ROLE_AUTHOR")
                     .anyRequest().authenticated()
