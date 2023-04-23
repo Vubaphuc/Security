@@ -80,6 +80,8 @@ public class SecurityConfig {
 
 
         http
+                .cors()
+                .and()
                 .csrf().disable()
                 .authorizeHttpRequests()
                     .requestMatchers(PUBLIC).permitAll()

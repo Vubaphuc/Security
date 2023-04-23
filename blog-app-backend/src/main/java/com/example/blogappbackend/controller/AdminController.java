@@ -37,7 +37,6 @@ public class AdminController {
 
     //    Lấy danh sách blog của user đang login (có phân trang, mặc định là pageSize = 10)
     @GetMapping("blogs/own-blogs")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_AUTHOR')")
     public ResponseEntity<?> findListBlogPageByUserLogin(
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer pageSize) {
