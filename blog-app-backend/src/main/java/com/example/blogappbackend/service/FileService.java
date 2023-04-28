@@ -5,7 +5,7 @@ import com.example.blogappbackend.entity.User;
 import com.example.blogappbackend.exception.BadRequestException;
 import com.example.blogappbackend.exception.NotFoundException;
 import com.example.blogappbackend.repository.ImageRepository;
-import com.example.blogappbackend.response.FileResponse;
+import com.example.blogappbackend.dto.response.FileResponse;
 import com.example.blogappbackend.security.ICurrentUserImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

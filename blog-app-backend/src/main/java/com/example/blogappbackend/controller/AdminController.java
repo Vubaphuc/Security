@@ -1,20 +1,11 @@
 package com.example.blogappbackend.controller;
 
-import com.example.blogappbackend.entity.User;
-import com.example.blogappbackend.exception.NotFoundException;
-import com.example.blogappbackend.repository.BlogRepository;
-import com.example.blogappbackend.repository.UserRepository;
-import com.example.blogappbackend.request.UpsertBlogRequest;
+import com.example.blogappbackend.dto.request.UpsertBlogRequest;
 import com.example.blogappbackend.service.AdminService;
-import com.example.blogappbackend.service.CustomUserDetailsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,8 +16,7 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-    @Autowired
-    private UserRepository userRepository;
+
 
     // 1. Lấy danh sách blog (có phân trang, mặc định là pageSize = 10)
     @GetMapping("blogs")

@@ -1,6 +1,6 @@
 package com.example.blogappbackend.controller;
 
-import com.example.blogappbackend.request.UpdateCommentRequest;
+import com.example.blogappbackend.dto.request.UpdateCommentRequest;
 import com.example.blogappbackend.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

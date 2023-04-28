@@ -1,10 +1,9 @@
 package com.example.blogappbackend.service;
 
-import com.example.blogappbackend.entity.Blog;
 import com.example.blogappbackend.entity.Comment;
 import com.example.blogappbackend.exception.NotFoundException;
 import com.example.blogappbackend.repository.CommentRepository;
-import com.example.blogappbackend.request.UpdateCommentRequest;
+import com.example.blogappbackend.dto.request.UpdateCommentRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

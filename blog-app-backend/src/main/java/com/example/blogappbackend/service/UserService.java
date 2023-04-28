@@ -7,7 +7,7 @@ import com.example.blogappbackend.exception.NotFoundException;
 import com.example.blogappbackend.mapper.UserMapper;
 import com.example.blogappbackend.repository.RoleRepository;
 import com.example.blogappbackend.repository.UserRepository;
-import com.example.blogappbackend.request.UpsertUserRequest;
+import com.example.blogappbackend.dto.request.UpsertUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

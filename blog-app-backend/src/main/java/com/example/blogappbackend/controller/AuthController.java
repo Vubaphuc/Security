@@ -2,15 +2,12 @@ package com.example.blogappbackend.controller;
 
 
 import com.example.blogappbackend.entity.User;
-import com.example.blogappbackend.exception.NotFoundException;
 import com.example.blogappbackend.mapper.UserMapper;
 import com.example.blogappbackend.repository.UserRepository;
-import com.example.blogappbackend.request.LoginRequest;
-import com.example.blogappbackend.response.AuthResponse;
+import com.example.blogappbackend.dto.request.LoginRequest;
+import com.example.blogappbackend.dto.response.AuthResponse;
 import com.example.blogappbackend.security.JwtUtils;
 import com.example.blogappbackend.service.CustomUserDetailsService;
-import jakarta.annotation.security.PermitAll;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +17,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.context.HttpRequestResponseHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 @RestController

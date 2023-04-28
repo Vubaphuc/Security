@@ -1,7 +1,7 @@
 package com.example.blogappbackend.controller;
 
 import com.example.blogappbackend.entity.Image;
-import com.example.blogappbackend.response.FileResponse;
+import com.example.blogappbackend.dto.response.FileResponse;
 import com.example.blogappbackend.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

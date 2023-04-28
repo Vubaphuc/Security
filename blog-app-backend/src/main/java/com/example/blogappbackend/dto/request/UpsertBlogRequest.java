@@ -1,4 +1,4 @@
-package com.example.blogappbackend.request;
+package com.example.blogappbackend.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

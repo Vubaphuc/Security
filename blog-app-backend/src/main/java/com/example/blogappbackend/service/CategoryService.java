@@ -6,7 +6,7 @@ import com.example.blogappbackend.exception.BadRequestException;
 import com.example.blogappbackend.exception.NotFoundException;
 import com.example.blogappbackend.repository.BlogRepository;
 import com.example.blogappbackend.repository.CategoryRepository;
-import com.example.blogappbackend.request.UpsertCategoryRequest;
+import com.example.blogappbackend.dto.request.UpsertCategoryRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

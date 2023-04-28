@@ -2,8 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const END_POINT = "http://localhost:8080/api/v1/admin";
 
-export const blogApi = createApi({
-    reducerPath: "blogApi",
+export const categoryApi = createApi({
+    reducerPath: "categoryApi",
     baseQuery: fetchBaseQuery({
         baseUrl: END_POINT,
         prepareHeaders: (headers, { getState }) => {
@@ -16,22 +16,13 @@ export const blogApi = createApi({
         }
     }),
     endpoints: (builder) => ({
-        getBlogs: builder.query({
-            query: ({page,pageSize}) => `blogs?page=${page}&pageSize=${pageSize}`,
-        }),
-        getOwnBlogs: builder.query({
-            query: ({page,pageSize}) => `blogs/own-blogs?page=${page}&pageSize=${pageSize}`,
-        }),
-        getBlogById: builder.query({
-            query: (id) => `blogs/${id}`,
+        getAllCategory: builder.query({
+            query: ({page,pageSize}) => `categories?page=${page}&pageSize=${pageSize}`,
         }),
     }),
 });
 
 export const {
-    useGetBlogsQuery,
-    useLazyGetBlogsQuery,
-    useGetOwnBlogsQuery,
-    useLazyGetOwnBlogsQuery,
-    useGetBlogByIdQuery
-} = blogApi;
+    useGetAllCategoryQuery,
+    useLazyGetAllCategoryQuery
+} = categoryApi;

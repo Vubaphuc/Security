@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../app/apis/authApi";
+import { toast } from "react-toastify";
 
 function LoginPage() {
   // TODO : Validate form trước lên gửi lên server
@@ -23,9 +24,10 @@ function LoginPage() {
     login({ email, password })
       .unwrap()
       .then(() => {
+        toast.success("Đăng nhập thành công")
         navigate("/admin/blogs/own-blogs");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => toast.error(err));
   };
 
   return (

@@ -2,22 +2,18 @@ package com.example.blogappbackend.service;
 
 import com.example.blogappbackend.dto.PageBlog;
 import com.example.blogappbackend.entity.Blog;
-import com.example.blogappbackend.entity.Category;
 import com.example.blogappbackend.entity.User;
 import com.example.blogappbackend.exception.NotFoundException;
 import com.example.blogappbackend.repository.BlogRepository;
 import com.example.blogappbackend.repository.CategoryRepository;
 import com.example.blogappbackend.repository.UserRepository;
-import com.example.blogappbackend.request.UpsertBlogRequest;
+import com.example.blogappbackend.dto.request.UpsertBlogRequest;
 import com.example.blogappbackend.security.ICurrentUserImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @Slf4j
@@ -31,9 +27,10 @@ public class AdminService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+
     public PageBlog findListBlogPage(Integer page, Integer pageSize) {
 
-        Page<Blog> blogPage = blogRepository.findAllByStatusTrue(PageRequest.of(page - 1, pageSize));
+        Page<Blog> blogPage = blogRepository.findAll(PageRequest.of(page - 1, pageSize));
         return new PageBlog(
                 blogPage.getNumber() + 1,
                 blogPage.getSize(),

@@ -1,4 +1,4 @@
-package com.example.blogappbackend.response;
+package com.example.blogappbackend.dto.response;
 
 import com.example.blogappbackend.dto.UserDto;
 import com.fasterxml.jackson.annotation.JsonProperty;

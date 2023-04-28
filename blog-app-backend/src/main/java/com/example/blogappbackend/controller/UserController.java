@@ -1,6 +1,6 @@
 package com.example.blogappbackend.controller;
 
-import com.example.blogappbackend.request.UpsertUserRequest;
+import com.example.blogappbackend.dto.request.UpsertUserRequest;
 import com.example.blogappbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

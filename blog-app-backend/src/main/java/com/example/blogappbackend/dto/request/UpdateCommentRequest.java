@@ -1,4 +1,4 @@
-package com.example.blogappbackend.response;
+package com.example.blogappbackend.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FileResponse {
-    private String url;
+public class UpdateCommentRequest {
+    private String content;
 }
