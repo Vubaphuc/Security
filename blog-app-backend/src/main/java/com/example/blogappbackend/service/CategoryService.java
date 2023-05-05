@@ -21,6 +21,10 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
     @Autowired
     private BlogRepository blogRepository;
+
+    @Autowired
+    private BlogService blogService;
+
     public Page<Category> findListCategoryPage(Integer page, Integer pageSize) {
         return categoryRepository.findAll(PageRequest.of(page - 1, pageSize));
     }
@@ -64,6 +68,17 @@ public class CategoryService {
 
         categoryRepository.deleteById(category.getId());
 
+
         return category;
+    }
+
+    public Category findCategoryById(Integer id) {
+        return categoryRepository.findById(id).orElseThrow(() -> {
+            throw new NotFoundException("Không tìm thấy Category với id = " + id);
+        });
+    }
+
+    public List<Blog> findBlogsByCategoryName(String categoryName) {
+        return blogService.findBlogsByCategoryName(categoryName);
     }
 }

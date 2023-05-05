@@ -3,12 +3,13 @@ package com.example.blogappbackend.service;
 import com.example.blogappbackend.dto.PageBlog;
 import com.example.blogappbackend.entity.Blog;
 import com.example.blogappbackend.entity.User;
+import com.example.blogappbackend.exception.BadRequestException;
 import com.example.blogappbackend.exception.NotFoundException;
 import com.example.blogappbackend.repository.BlogRepository;
 import com.example.blogappbackend.repository.CategoryRepository;
-import com.example.blogappbackend.repository.UserRepository;
 import com.example.blogappbackend.dto.request.UpsertBlogRequest;
 import com.example.blogappbackend.security.ICurrentUserImpl;
+import com.github.slugify.Slugify;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,8 +21,6 @@ import org.springframework.stereotype.Service;
 public class AdminService {
     @Autowired
     private BlogRepository blogRepository;
-    @Autowired
-    private UserRepository userRepository;
     @Autowired
     private ICurrentUserImpl iCurrentUser;
     @Autowired
@@ -64,13 +63,17 @@ public class AdminService {
     }
 
     public Blog createNewBlog(UpsertBlogRequest request) {
+        Slugify slugify = Slugify.builder().build();
+
+        User user = iCurrentUser.getUser();
 
         Blog blog = Blog.builder()
                 .title(request.getTitle())
+                .slug(slugify.slugify(request.getTitle()))
                 .description(request.getDescription())
                 .content(request.getContent())
-                .thumbnail(request.getThumbnail())
                 .status(request.getStatus())
+                .user(user)
                 .categories(categoryRepository.findAllById(request.getCategoryIds()))
                 .build();
         blogRepository.save(blog);
@@ -81,13 +84,23 @@ public class AdminService {
         Blog blog = blogRepository.findBlogById(id).orElseThrow(() -> {
             throw new NotFoundException("Not Found Blog With i = " + id);
         });
+        Slugify slugify = Slugify.builder().build();
+
+        User user = iCurrentUser.getUser();
+
+        if (blog.getUser().getId() != user.getId()) {
+            throw new BadRequestException("Bài viết không phải của bạn");
+        }
+
+
 
         blog.setTitle(request.getTitle());
+        blog.setSlug(slugify.slugify(request.getTitle()));
         blog.setDescription(request.getDescription());
         blog.setContent(request.getContent());
-        blog.setThumbnail(request.getThumbnail());
         blog.setStatus(request.getStatus());
         blog.setCategories(categoryRepository.findAllById(request.getCategoryIds()));
+        blog.setUser(user);
 
         blogRepository.save(blog);
 

@@ -58,7 +58,7 @@ public class AdminController {
     @DeleteMapping("blogs/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<?> deleteBlogById(@PathVariable Integer id) {
-        return ResponseEntity.ok("Đã Xóa " + adminService.deleteBlogById(id));
+        return ResponseEntity.ok( adminService.deleteBlogById(id));
     }
 
 //    Tìm kiếm bài viết (chỉ cần bài viết chứa keyword là được)

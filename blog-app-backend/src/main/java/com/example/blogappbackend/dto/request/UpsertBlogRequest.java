@@ -15,7 +15,6 @@ public class UpsertBlogRequest {
     private String title;
     private String description;
     private String content;
-    private String thumbnail;
     private Boolean status;
     private List<Integer> categoryIds;
 }

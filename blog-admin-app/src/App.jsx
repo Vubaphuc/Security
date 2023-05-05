@@ -9,8 +9,10 @@ import BlogCreate from "./page/blog/BlogCreate";
 import LoginPage from "./page/login/LoginPAge";
 import AuthorizeRoutes from "./components/AuthorizeRoutes";
 import NotFound from "./page/notfound/NotFound";
-import { ToastContainer, toast  } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import CategoryList from "./page/category/CategoryList";
+import CategoryDetail from "./page/category/CategoryDetail";
 
 function App() {
   return (
@@ -29,6 +31,13 @@ function App() {
                 <Route path="own-blogs" element={<OwnBlog />} />
                 <Route path=":blogId" element={<BlogDetails />} />
                 <Route path="create" element={<BlogCreate />} />
+              </Route>
+            </Route>
+
+            <Route path="categories">
+              <Route element={<AuthorizeRoutes requireRoles={["ADMIN"]} />}>
+                <Route index element={<CategoryList />} />
+                <Route path=":categoryName" element={<CategoryDetail />} />
               </Route>
             </Route>
 
@@ -52,8 +61,6 @@ function App() {
         pauseOnHover
         theme="colored"
       />
-      
-      
     </>
   );
 }

@@ -20,7 +20,6 @@ function BlogList() {
     return <h2>Loading....</h2>;
   }
 
-  console.log(blogPage);
 
   const handlePageClick = (page) => {
     console.log(page); //  {selected: 0}
@@ -36,12 +35,12 @@ function BlogList() {
         <div className="container-fluid">
           <div className="row py-2">
             <div className="col-12">
-              <button type="button" className="btn btn-primary">
+              <Link to={"/admin/blogs/create"} className="btn btn-primary">
                 <i className="fas fa-plus"></i> Viết bài
-              </button>
-              <button type="button" className="btn btn-info">
+              </Link>
+              <Link to={"/admin/blogs"} className="btn btn-info">
                 <i className="fas fa-redo"></i> Refresh
-              </button>
+              </Link>
             </div>
           </div>
           <div className="row">

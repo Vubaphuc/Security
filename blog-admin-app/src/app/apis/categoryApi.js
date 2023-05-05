@@ -19,10 +19,37 @@ export const categoryApi = createApi({
         getAllCategory: builder.query({
             query: ({page,pageSize}) => `categories?page=${page}&pageSize=${pageSize}`,
         }),
+        getCategoryByName: builder.query({
+            query: (categoryName) => `categories/${categoryName}`
+        }),
+        createCategory: builder.mutation({
+            query: (data) => ({
+                url: "categories",
+                method: "POST",
+                body: data,
+            }),
+        }),
+        updateCategory: builder.mutation({
+            query: ({id,...data}) => ({
+                url: `categories/${id}`,
+                method: "PUT",
+                body: data,
+            }),
+        }),
+        deleteCategory: builder.mutation({
+            query: (id) => ({
+                url: `categories/${id}`,
+                method: "DELETE",  
+            }),
+        }),
     }),
 });
 
 export const {
     useGetAllCategoryQuery,
-    useLazyGetAllCategoryQuery
+    useLazyGetAllCategoryQuery,
+    useCreateCategoryMutation,
+    useDeleteCategoryMutation,
+    useUpdateCategoryMutation,
+    useGetCategoryByNameQuery
 } = categoryApi;

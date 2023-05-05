@@ -20,6 +20,12 @@ public class CategoryController {
     }
 
 
+    @GetMapping("categories/{categoryName}")
+    public ResponseEntity<?> findBlogsByCategoryName (@PathVariable String categoryName) {
+        return ResponseEntity.ok(categoryService.findBlogsByCategoryName(categoryName));
+    }
+
+
 //    Thêm category (Lưu ý tên category không được trùng nhau)
     @PostMapping("categories")
     @ResponseStatus(HttpStatus.CREATED)
