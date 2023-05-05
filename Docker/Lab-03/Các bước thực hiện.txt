@@ -1,0 +1,33 @@
+Bước 1. Trong ứng dụng Docker Desktop, chọn menu Image, trên image mysql:5.7, click nút Run, hộp thoại "Optional settings" mở ra.
+
+Tiếp theo, điền các thông tin như yêu cầu:
+
+Container name: data-mysql-baitap
+Ports : 13306
+Ports : bỏ qua host port thứ 2.
+Volumes: 
+	+ host path: data-mysql-baitap
+	+ Container path: /var/lib/mysql
+Thêm biến môi trường của ứng dụng mysql: 
+	+ MYSQL_DATABASE: student
+	+ MYSQL_USER: usermy
+	+ MYSQL_PASSWORD: mypassword
+	+ MYSQL_ROOT_PASSWORD: mypassword
+
+Bước 2. Kiểm tra container đã được khởi tạo
+
+Kiểm tra trong menu container của Docker Desktop
+
+Bước 3. Setup New Connection trên MySQL Wordbench.
+
+- Nếu sử dụng Connection Name:
+	Connection Name : data-mysql-baitap
+	Port: 13306
+	Password: mypassword
+
+- Nếu sử dụng Username:
+	Username: usermy
+	Password: mypassword
+	Default Schema: student
+
+Khi cài đặt xong click vào "Test Connection" báo Successfully made the SQL connection" thì đã thành công. Có thể chọn OK để tạo CSDL
