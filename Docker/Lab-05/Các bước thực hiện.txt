@@ -1,0 +1,10 @@
+Để xem log trên Conainers của Docker-Desktop:
+ + đầu tiền click vào name của ứng dụng cần xem thì docker desktop sẽ tự chuyển hướng tới Logs của ứng dụng đó.
+Thực hiện truy cập vào container mysql, và sử dụng các lệnh của mysql để kiểm tra cơ sở dữ liệu, table, data:
+
+đầu tiền ta mở command prompt của window lên. gõ lệnh "docker exec -it data-mysql-baitap bash".
+Trong đó data-mysql-baitap: là tên của ứng dụng mysql trên containers của docker desktop.
+Sau đó ta gõ lệnh "mysql -u root -p" nhấn enter, hình sẽ xuất hiện "Enter password:" ta điền mật khẩu ứng dụng vào.
+Tới đây ta đã truy cập thành công vào ứng dụng mysql. Giờ ta có thể thực hiện các câu lệnh như trên mysql.
+Ví dụ như : show databases;
+và nhiều lệnh khác.
