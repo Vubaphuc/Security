@@ -1,0 +1,19 @@
+Đầu tiên vào trang wed :
+
+https://hub.docker.com/
+
+Xong rồi đăng nhập tài khoản. Nếu chưa có tài khoản có thể đăng ký 1 tài khoản mới.
+Sau khi đăng nhập xong sử dụng chức năng "Search Docker Hub" để tìm kiếm từ khóa "openjdk".
+Trang Wed sẽ cho 1 danh sách các ứng dụng "openjdk". Hãy chọn ứng dụng nào có từ khóa "DOCKER OFFICIAL IMAGE" để 
+đảm bảo các tính năng bản quyền và tối ưu nhất.
+
+Sau khi chọn vào ứng dụng "openjdk" thì chuyển sang phần "Tags" và tìm kiếm phiên bản ver cần tải về và copy câu lệnh "docker pull" tương ứng.
+
+Mở Command Prompt của WINDOW lên và gõ câu lệnh pull copy trên trang wed trên rồi nhấn Enter.
+
+Việc còn lại là chờ đợi máy của bạn tải các files cần thiết của ứng dụng về.
+
+Làm tương tự với ứng dụng "mysql có version(tag) 5.7".
+
+Sau khi làm xong các bước trên ta vào "Docker Desktop" chọn phần Images để kiểm tra xem danh sách ứng dụng đã được tải về.
+Hoặc có thể dùng Command Prompt của WINDOW gõ lệnh "docker image ls" hoặc "docker images" để kiểm tra ứng dụng được tải về.
