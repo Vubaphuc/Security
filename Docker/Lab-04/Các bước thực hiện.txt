@@ -1,0 +1,16 @@
+Bước 1: Vào Command Prompt của WINDOW gõ lệnh "docker pull orezfu/java-app:v1"
+
+
+Bước 2. Trong ứng dụng Docker Desktop, chọn menu Image, trên image "orezfu/java-app:v1", click nút Run, hộp thoại "Optional settings" mở ra.
+
+Tiếp theo, điền các thông tin như yêu cầu:
+
+Container name: my-java-app
+Ports : 18081
+
+Bước 3. Kiểm tra container đã được khởi tạo
+
+Kiểm tra trong menu container của Docker Desktop
+
+Bước 4. Truy cập đường link : http://localhost:18081 hoặc click vào "Port" tương ứng với "my-java-app" cũng ra đường link tương ứng.
+
