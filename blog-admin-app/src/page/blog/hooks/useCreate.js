@@ -1,12 +1,14 @@
 import { useForm } from "react-hook-form"
 import { blogsSchema } from "../schemas/schemas"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { useCreateBlogMutation, useUpdateBlogByIdMutation } from "../../../app/apis/blogApi"
+import { useCreateBlogMutation } from "../../../app/apis/blogApi"
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 
 const useCreate = () => {
     const [addBlog] = useCreateBlogMutation();
-    const [updateBlog] = useUpdateBlogByIdMutation();
+    const navigate = useNavigate();
 
     const {
         control, register, handleSubmit, formState: { errors },
@@ -19,19 +21,15 @@ const useCreate = () => {
     const onCreateBlog = (data) => {
         addBlog(data)
         .unwrap()
-        .then((res) => console.log(res))
+        .then(() => {
+            navigate("/admin/blogs/own-blogs")
+            toast.success("tạo mới thành công")
+        })
         .catch((err) => console.log(err))
     };
 
-    const onUpdateBlog = (data) => {
-       console.log(data)
-       
-       
-       
-    };
-
     return {
-        control, register, handleSubmit, errors, onCreateBlog, onUpdateBlog
+        control, register, handleSubmit, errors, onCreateBlog
     }
 }
 

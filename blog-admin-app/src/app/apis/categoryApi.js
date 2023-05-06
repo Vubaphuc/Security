@@ -19,8 +19,8 @@ export const categoryApi = createApi({
         getAllCategory: builder.query({
             query: ({page,pageSize}) => `categories?page=${page}&pageSize=${pageSize}`,
         }),
-        getCategoryByName: builder.query({
-            query: (categoryName) => `categories/${categoryName}`
+        getCategoryById: builder.query ({
+            query: (id) => `categories/${id}`
         }),
         createCategory: builder.mutation({
             query: (data) => ({
@@ -51,5 +51,6 @@ export const {
     useCreateCategoryMutation,
     useDeleteCategoryMutation,
     useUpdateCategoryMutation,
-    useGetCategoryByNameQuery
+    useGetCategoryByIdQuery,
+    useLazyGetCategoryByIdQuery
 } = categoryApi;

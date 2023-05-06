@@ -16,3 +16,15 @@ export const getStatus = () => {
     { label: "Công Khai", value: true },
   ];
 };
+
+export const getRoles = (roles) => {
+  if(!roles) {
+    return [];
+  }
+  return roles.map((role) => {
+    return {
+      label: role.name,
+      value: role.id,
+    };
+  });
+}

@@ -19,11 +19,12 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.findListCategoryPage(page,pageSize));
     }
 
-
-    @GetMapping("categories/{categoryName}")
-    public ResponseEntity<?> findBlogsByCategoryName (@PathVariable String categoryName) {
-        return ResponseEntity.ok(categoryService.findBlogsByCategoryName(categoryName));
+    @GetMapping("categories/{id}")
+    public ResponseEntity<?> findCategorybyId(@PathVariable Integer id) {
+        return ResponseEntity.ok(categoryService.findCategoryById(id));
     }
+
+
 
 
 //    Thêm category (Lưu ý tên category không được trùng nhau)

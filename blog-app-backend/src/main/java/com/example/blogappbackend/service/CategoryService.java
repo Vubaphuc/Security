@@ -50,7 +50,10 @@ public class CategoryService {
         if (category.getName().equalsIgnoreCase(request.getName())) {
             throw new BadRequestException("Name Category bị trùng");
         }
+
         category.setName(request.getName());
+
+        categoryRepository.save(category);
 
         return category;
     }
@@ -73,7 +76,8 @@ public class CategoryService {
     }
 
     public Category findCategoryById(Integer id) {
-        return categoryRepository.findById(id).orElseThrow(() -> {
+        return
+ categoryRepository.findById(id).orElseThrow(() -> {
             throw new NotFoundException("Không tìm thấy Category với id = " + id);
         });
     }

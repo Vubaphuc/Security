@@ -1,52 +1,90 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
-import { useGetCategoryByNameQuery } from "../../app/apis/categoryApi";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  useDeleteCategoryMutation,
+  useGetCategoryByIdQuery
+} from "../../app/apis/categoryApi";
+import useUpdateCategory from "../blog/hooks/useUpdateCategory";
+import { toast } from "react-toastify";
 
 function CategoryDetail() {
-  const { categoryName } = useParams();
 
-  console.log(categoryName)
-  
+  const { categoryId } = useParams();
+  const navigate = useNavigate();
 
-  const {
-    data: blogData,
-    isLoading: blogLoading,
-    isError: blogIsError,
-    error: blogError,
-  } = useGetCategoryByNameQuery(categoryName);
+  const [deleteCategory] = useDeleteCategoryMutation();
 
-  if (blogLoading) {
+  const { data: categoryData, isLoading } = useGetCategoryByIdQuery(categoryId);
+
+  const { register, handleSubmit, errors, onUpdateCategory } =
+    useUpdateCategory(categoryId);
+
+  if (isLoading) {
     return <h2>Loading....</h2>;
   }
-  if (blogIsError) {
-    return <h2>Error: {blogError}</h2>;
-  }
 
-  console.log(blogData)
+  const handleDeleteCategory = (id) => {
+      deleteCategory(id)
+        .unwrap()
+        .then(() => {
+          toast.success("Xóa thành công")
+          navigate("/admin/categories")
+        })
+        .catch((err) => alert(err.data.message))
+  }
 
   return (
     <>
-      <header className="entry-header">
-        <h1 style={{ marginBottom: "1rem" }}>Tag : {categoryName}</h1>
-      </header>
-      <main className="main">
-        {blogData.map((blog) => (
-          <article className="post-entry" key={blog?.id}>
-            <header className="entry-header">
-              <h2>{blog?.title}</h2>
-            </header>
-            <div className="entry-content">
-              <p>{blog?.content}</p>
+      <section className="content">
+        <div className="container-fluid">
+          <form onSubmit={handleSubmit(onUpdateCategory)}>
+            <div className="row py-2">
+              <div className="col-6">
+                <Link to={"/admin/categories"} className="btn btn-default">
+                  <i className="fas fa-chevron-left"></i> Quay lại
+                </Link>
+                <button type="submit" className="btn btn-info px-4">
+                  Lưu
+                </button>
+              </div>
+              <div className="col-6 d-flex justify-content-end">
+                <button type="button" className="btn btn-danger px-4" onClick={ () => handleDeleteCategory(categoryData?.id)} >
+                  Xóa
+                </button>
+              </div>
             </div>
-            <footer className="entry-footer">
-              <span>{new Date(blog?.createdAt).toLocaleDateString()}</span>
-            </footer>
-            <Link className="entry-link" to={`/admin/blogs/${blog.id}`}>
-              Read More
-            </Link>
-          </article>
-        ))}
-      </main>
+            <div className="row">
+              <div className="col-12">
+                <div className="card">
+                  <div className="card-body">
+                    <div className="row">
+                      <div className="col-md-8">
+                        <div className="form-group">
+                          <label>Tiêu đề</label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="name"
+                            defaultValue={categoryData?.name}
+                            onChange={(e) => {
+                              categoryData.name = e.target.value;
+                            }}
+                            {...register("name")}
+                          />
+                          <p className="text-danger fst-italic mt-2">
+                            {errors.name?.message}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="col-md-4"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
     </>
   );
 }

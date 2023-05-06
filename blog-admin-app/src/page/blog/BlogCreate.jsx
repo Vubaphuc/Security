@@ -47,14 +47,8 @@ function BlogCreate() {
               <button type="submit" className="btn btn-info px-4">
                 Lưu
               </button>
-              <button className="btn btn-primary px-4">Preview</button>
             </div>
 
-            <div className="col-6 d-flex justify-content-end">
-              <button type="button" className="btn btn-danger px-4">
-                Xóa
-              </button>
-            </div>
           </div>
 
           <div className="row">

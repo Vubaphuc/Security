@@ -68,7 +68,7 @@ function OwnBlog() {
                             </Link>
                           </td>
                           <td>
-                            <a href="#">{blog.user.name}</a>
+                            <Link to={`/admin/blogs/${blog.id}`}>{blog.user.name}</Link>
                           </td>
                           <td>
                             {blog.categories.map((c) => c.name).join(", ")}

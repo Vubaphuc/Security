@@ -1,16 +1,15 @@
 import React, { useEffect } from "react";
-import { useLazyGetBlogsQuery } from "../../app/apis/blogApi";
-import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
+import { Link } from "react-router-dom";
+import { useLazyGetAllUserQuery } from "../../app/apis/userApi";
+import { Controller } from "react-hook-form";
+import Select from "react-select";
 
-function BlogList() {
-
-  // nếu dùng useLazy để gọi APi thì cần phải sử dụng useEffect để render ra dữ liệu
-  const [getBlogs, { data: blogPage, isLoading }] = useLazyGetBlogsQuery();
-
+function UserList() {
+  const [getUsers, { data: userData, isLoading }] = useLazyGetAllUserQuery();
   // useEffect phải chạy giao diện trước mới gọi tới useEffect
   useEffect(() => {
-    getBlogs({
+    getUsers({
       page: 1,
       pageSize: 10,
     });
@@ -20,14 +19,13 @@ function BlogList() {
     return <h2>Loading....</h2>;
   }
 
+  console.log(userData);
 
   const handlePageClick = (page) => {
-    console.log(page); //  {selected: 0}
-    getBlogs({
-      page: page.selected + 1,
-      pageSize: 10,
-    });
+    console.log(page);
   };
+
+
 
   return (
     <>
@@ -35,10 +33,10 @@ function BlogList() {
         <div className="container-fluid">
           <div className="row py-2">
             <div className="col-12">
-              <Link to={"/admin/blogs/create"} className="btn btn-primary">
-                <i className="fas fa-plus"></i> Viết bài
+              <Link to={"/admin/users/create"} className="btn btn-primary">
+                <i className="fas fa-plus"></i> Tạo Mới
               </Link>
-              <Link to={"/admin/blogs"} className="btn btn-info">
+              <Link to={""} className="btn btn-info">
                 <i className="fas fa-redo"></i> Refresh
               </Link>
             </div>
@@ -50,37 +48,28 @@ function BlogList() {
                   <table className="table table-bordered table-hover">
                     <thead>
                       <tr>
-                        <th>Tiêu đề</th>
-                        <th>Tác giả</th>
-                        <th>Danh mục</th>
-                        <th>Trạng thái</th>
-                        <th>Ngày tạo</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Roles</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {blogPage &&
-                        blogPage.data.map((blog) => (
-                          <tr key={blog.id}>
+                      {userData &&
+                        userData.content.map((user) => (
+                          <tr>
                             <td>
-                              <Link to={`/admin/blogs/${blog.id}`}>
-                                {blog.title}
-                              </Link>
+                              <Link to={`/admin/users/${user.id}`}>{user?.name}</Link>
                             </td>
                             <td>
-                              <Link to={`/admin/blogs/${blog.id}`}>{blog.user.name}</Link>
+                              <Link to={`/admin/users/${user.id}`}>{user.email}</Link>
                             </td>
                             <td>
-                              {blog.categories.map((c) => c.name).join(", ")}
-                            </td>
-                            <td>{blog.status ? "Công khai" : "Nháp"}</td>
-                            <td>
-                              {new Date(blog.createdAt).toLocaleDateString()}
+                                {user.roles.map((role) => role.name).join(", ")}
                             </td>
                           </tr>
                         ))}
                     </tbody>
                   </table>
-
                   <div
                     className="d-flex justify-content-center mt-3"
                     id="pagination"
@@ -90,7 +79,7 @@ function BlogList() {
                       onPageChange={handlePageClick}
                       pageRangeDisplayed={3}
                       marginPagesDisplayed={2}
-                      pageCount={blogPage?.totalPages}
+                      pageCount={userData?.totalPages}
                       previousLabel="< previous"
                       pageClassName="page-item"
                       pageLinkClassName="page-link"
@@ -116,4 +105,4 @@ function BlogList() {
   );
 }
 
-export default BlogList;
+export default UserList;

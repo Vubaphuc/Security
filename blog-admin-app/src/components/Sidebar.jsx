@@ -67,10 +67,10 @@ function Sidebar() {
               </h5>
               <ul className="m-0 p-0">
                 <li>
-                  <a href="#">Danh sách user</a>
+                  <Link to={"/admin/users"}>Danh sách user</Link>
                 </li>
                 <li>
-                  <a href="#">Tạo user</a>
+                  <Link to={"/admin/users/create"}>Tạo user</Link>
                 </li>
               </ul>
             </div>

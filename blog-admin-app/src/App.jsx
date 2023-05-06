@@ -13,6 +13,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CategoryList from "./page/category/CategoryList";
 import CategoryDetail from "./page/category/CategoryDetail";
+import CategoryCreate from "./page/category/CategoryCreate";
+import UserList from "./page/user/UserList";
+import UserCreate from "./page/user/UserCreate";
+import UserDetail from "./page/user/UserDetail";
 
 function App() {
   return (
@@ -37,7 +41,16 @@ function App() {
             <Route path="categories">
               <Route element={<AuthorizeRoutes requireRoles={["ADMIN"]} />}>
                 <Route index element={<CategoryList />} />
-                <Route path=":categoryName" element={<CategoryDetail />} />
+                <Route path="create" element={<CategoryCreate />} />
+                <Route path=":categoryId" element={<CategoryDetail />} />
+              </Route>
+            </Route>
+
+            <Route path="users">
+              <Route element={<AuthorizeRoutes requireRoles={["ADMIN"]} />}>
+                <Route index element={<UserList />} />
+                <Route path="create" element={<UserCreate />} />
+                <Route path=":userId" element={<UserDetail />} />
               </Route>
             </Route>
 

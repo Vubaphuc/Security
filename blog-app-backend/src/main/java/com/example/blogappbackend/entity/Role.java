@@ -3,6 +3,8 @@ package com.example.blogappbackend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,5 +20,6 @@ public class Role {
     private Integer id;
     @Column(name = "name", unique = true)
     private String name;
+
 
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   useDeleteBlogByIdMutation,
   useGetBlogByIdQuery,
@@ -9,6 +9,7 @@ import { getCategoryOptions, getStatus } from "../options/options";
 import { useGetAllCategoryQuery } from "../../app/apis/categoryApi";
 import { Controller } from "react-hook-form";
 import useUpdate from "./hooks/useUpdate";
+import { toast } from "react-toastify";
 
 function BlogDetails() {
 
@@ -64,7 +65,10 @@ function BlogDetails() {
   const handleDelete = (id) => {
     deleteBlog(id)
       .unwrap()
-      .then(() => navigate("/admin/blogs"))
+      .then(() => {
+        toast.success("Xóa thành công")
+        navigate("/admin/blogs")
+      })
       .catch((err) => alert(err.data.message));
   };
 
@@ -74,13 +78,12 @@ function BlogDetails() {
         <form onSubmit={handleSubmit(onUpdate)}>
           <div className="row py-2">
             <div className="col-6">
-              <button className="btn btn-default">
+              <Link to={"/admin/blogs"} className="btn btn-default">
                 <i className="fas fa-chevron-left"></i> Quay lại
-              </button>
+              </Link>
               <button type="submit" className="btn btn-info px-4">
                 Lưu
               </button>
-              <button className="btn btn-primary px-4">Preview</button>
             </div>
 
             <div className="col-6 d-flex justify-content-end">
@@ -106,7 +109,7 @@ function BlogDetails() {
                           type="text"
                           className="form-control"
                           id="title"
-                          value={blogData?.title}
+                          defaultValue={blogData?.title}
                           {...register("title")}
                         />
                         <p className="text-danger fst-italic mt-2">
@@ -118,7 +121,7 @@ function BlogDetails() {
                         <label>Nội dung</label>
                         <textarea
                           id="content"
-                          value={blogData?.content}
+                          defaultValue={blogData?.content}
                           {...register("content")}
                         ></textarea>
                         <p className="text-danger fst-italic mt-2">
@@ -132,7 +135,7 @@ function BlogDetails() {
                           id="description"
                           className="form-control"
                           rows="3"
-                          value={blogData?.description}
+                          defaultValue={blogData?.description}
                           {...register("description")}
                         ></textarea>
                         <p className="text-danger fst-italic mt-2">
